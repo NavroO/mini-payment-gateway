@@ -77,6 +77,26 @@ services:
     networks:
       - backend
 
+  api:
+    build: ./api
+    ports:
+      - "3000:3000"
+    environment:
+      POSTGRES_URL: ${POSTGRES_URL}
+      MONGO_URL: ${MONGO_URL}
+      REDIS_URL: ${REDIS_URL}
+      RABBIT_URL: ${RABBIT_URL}
+      KAFKA_BROKER: ${KAFKA_BROKER}
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      - db
+      - redis
+      - mongo
+      - rabbitmq
+      - broker
+    networks:
+      - backend
+
 volumes:
   pgdata:
   redisdata:
